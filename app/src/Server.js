@@ -77,13 +77,13 @@ const dotenv = require('dotenv').config();
 const db = require("./models/index");
 // Database synchorization with different Modals
 db.sequelize.sync();
-/*
-AWS.config.update({
-    accessKeyId: 'AKIA4MTWH2RASGOM562U',
-    secretAccessKey: '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',
-    region: 'apsouth1'
-  });
-*/  
+
+// AWS.config.update({
+//     accessKeyId: 'AKIA4MTWH2RASGOM562U',
+//     secretAccessKey: '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',
+//     region: 'apsouth1'
+//   });
+  
 const roomController = require('./controller/room.controller');
 
 
