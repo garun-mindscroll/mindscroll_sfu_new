@@ -72,16 +72,11 @@ const Sentry = require('@sentry/node');
 const { CaptureConsole } = require('@sentry/integrations');
 const restrictAccessByIP = require('./middleware/IpWhitelist.js');
 const packageJson = require('../../package.json');
-
 const dotenv = require('dotenv').config();
 const db = require("./models/index");
 // Database synchorization with different Modals
 db.sequelize.sync();
-
-  
 const roomController = require('./controller/room.controller');
-
-
 // Slack API
 const CryptoJS = require('crypto-js');
 const qS = require('qs');
