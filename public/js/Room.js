@@ -248,6 +248,23 @@ let transcription;
 // INIT ROOM
 // ####################################################
 
+// Garun Mishra Code start //
+async function validateRoom() {
+    $('#loadingDiv').show();
+    var checkResponse = await fetch('/vcapi/validate_room', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ room_key: room_id })
+    }).then(r => r.json());
+    if(checkResponse.status == 1) {
+        initClient();
+    } else {
+        $('#loadingDiv').hide();
+        $('#invalidRoom').show();
+    }
+}
+// Garun Mishra Code End //
+
 function initClient() {
     setTheme();
 
@@ -782,6 +799,37 @@ async function checkInitConfig() {
 // SOME PEER INFO
 // ####################################################
 
+// Garun Mishra Code start //
+async function checkUserPermission(room_id,user_email,user_name) {
+    $('#loadingDiv').show();
+    var checkResponse = await fetch('/vcapi/create_user_and_get_permission', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ room_key: room_id,user_email:user_email, user_name:user_name })
+    }).then(r => r.json());
+    if(checkResponse.status == 1) {
+        if(checkResponse.data.resdata.user.is_organizer == 1) {
+            setCookie('is_organizer',true,1);
+        } else {
+            setCookie('is_organizer',false,1);
+        }
+        $('#loadingDiv').hide();
+
+        if (initStream && !joinRoomWithScreen) {
+            await stopTracks(initStream);
+            elemDisplay('initVideo', false);
+            initVideoContainerShow(false);
+        }
+        getPeerInfo();
+        joinRoom(peer_name, room_id);
+
+    } else {
+        $('#loadingDiv').hide();
+        $('#invalidRoom').show();
+    }
+}
+// Garun Mishra Code End //
+
 function getPeerInfo() {
     peer_info = {
         join_data_time: getDataTimeString(),
@@ -817,6 +865,20 @@ async function whoAreYou() {
 
     hide(loadingDiv);
     document.body.style.background = 'var(--body-bg)';
+
+    // Garun Mishra Code start //
+    var is_admin_auto_login_enabled = false;
+    var admin_user_name = '';
+    var admin_user_email = '';
+    is_admin_auto_login_enabled = await getCookie('is_admin_auto_login_enabled') != null  ?  await getCookie('is_admin_auto_login_enabled') : false;
+    admin_user_name = await getCookie('admin_user_name') != null  ?  await getCookie('admin_user_name') : '';
+    admin_user_email = await getCookie('admin_user_email') != null  ?  await getCookie('admin_user_email') : '';
+    if(is_admin_auto_login_enabled && admin_user_name != '') {
+        peer_name = admin_user_name;
+        notify = 0;
+        checkUserPermission(room_id,admin_user_email,admin_user_name)
+    }
+    // Garun Mishra Code End //
 
     try {
         const response = await axios.get('/config', {
@@ -1101,32 +1163,55 @@ function shareRoomByEmail() {
         background: swalBackground,
         imageUrl: image.email,
         position: 'center',
-        title: 'Select a Date and Time',
-        html: '<input type="text" id="datetimePicker" class="flatpickr" />',
+        title: 'Enter the Email',
+        html: '<input type="text" id="newparticipantemail" class="flatpickr" />',
         showCancelButton: true,
         confirmButtonText: 'OK',
         cancelButtonColor: 'red',
         showClass: { popup: 'animate__animated animate__fadeInDown' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' },
         preConfirm: () => {
-            const newLine = '%0D%0A%0D%0A';
-            const selectedDateTime = document.getElementById('datetimePicker').value;
+            // const newLine = '%0D%0A%0D%0A';
+            // const selectedDateTime = document.getElementById('datetimePicker').value;
+            // const roomPassword =
+            //     isRoomLocked && (room_password || rc.RoomPassword)
+            //         ? 'Password: ' + (room_password || rc.RoomPassword) + newLine
+            //         : '';
+            // const email = '';
+            // const emailSubject = `Please join our ${BRAND.app.name} Video Chat Meeting`;
+            // const emailBody = `The meeting is scheduled at: ${newLine} DateTime: ${selectedDateTime} ${newLine}${roomPassword}Click to join: ${RoomURL} ${newLine}`;
+            // document.location = 'mailto:' + email + '?subject=' + emailSubject + '&body=' + emailBody;
+            
+            // Garun Mishra Code start //
+            const newparticipantemail = document.getElementById('newparticipantemail').value;
             const roomPassword =
                 isRoomLocked && (room_password || rc.RoomPassword)
                     ? 'Password: ' + (room_password || rc.RoomPassword) + newLine
                     : '';
             const email = '';
-            const emailSubject = `Please join our ${BRAND.app.name} Video Chat Meeting`;
-            const emailBody = `The meeting is scheduled at: ${newLine} DateTime: ${selectedDateTime} ${newLine}${roomPassword}Click to join: ${RoomURL} ${newLine}`;
-            document.location = 'mailto:' + email + '?subject=' + emailSubject + '&body=' + emailBody;
+            sendInviteMail(newparticipantemail,RoomURL,room_id);
+            // Garun Mishra Code End //
         },
     });
-    flatpickr('#datetimePicker', {
-        enableTime: true,
-        dateFormat: 'Y-m-d H:i',
-        time_24hr: true,
-    });
+    // flatpickr('#datetimePicker', {
+    //     enableTime: true,
+    //     dateFormat: 'Y-m-d H:i',
+    //     time_24hr: true,
+    // });
 }
+
+// Garun Mishra Code start //
+async function sendInviteMail(newparticipantemail,RoomURL,room_id) {
+    var checkResponse = await fetch('/vcapi/send_invite_mail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: newparticipantemail, room_key: room_id, room_url:RoomURL})
+    }).then(r => r.json());
+    if(checkResponse.status == 1) {
+        sound('open');
+    }
+}
+// Garun Mishra Code End //
 
 // ####################################################
 // JOIN ROOM

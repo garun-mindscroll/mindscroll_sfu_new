@@ -72,20 +72,48 @@ const Sentry = require('@sentry/node');
 const { CaptureConsole } = require('@sentry/integrations');
 const restrictAccessByIP = require('./middleware/IpWhitelist.js');
 const packageJson = require('../../package.json');
+//const AWS = require('awssdk');
+const dotenv = require('dotenv').config();
+const db = require("./models/index");
+// Database synchorization with different Modals
+db.sequelize.sync();
+/*
+AWS.config.update({
+    accessKeyId: 'AKIA4MTWH2RASGOM562U',
+    secretAccessKey: '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',
+    region: 'apsouth1'
+  });
+*/  
+const roomController = require('./controller/room.controller');
+
 
 // Slack API
 const CryptoJS = require('crypto-js');
 const qS = require('qs');
 const slackEnabled = config.slack.enabled;
 const slackSigningSecret = config.slack.signingSecret;
-const bodyParser = require('body-parser');
+
 
 const app = express();
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json({
+    limit: '50mb'
+  }));
+  app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    parameterLimit: 100000,
+    extended: true
+  }));
+
 
 const options = {
     cert: fs.readFileSync(path.join(__dirname, config.server.ssl.cert), 'utf-8'),
     key: fs.readFileSync(path.join(__dirname, config.server.ssl.key), 'utf-8'),
 };
+
+// Api routing
+require('./routes/apiRoute.js')(app);
 
 const corsOptions = {
     origin: config.server?.cors?.origin || '*',
@@ -250,7 +278,8 @@ function startServer() {
     app.use(compression());
     app.use(express.json());
     app.use(express.static(dir.public));
-    app.use(bodyParser.urlencoded({ extended: true }));
+    // app.use(bodyParser.urlencoded({ extended: true }));
+
     app.use(restApi.basePath + '/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // api docs
 
     // IP Whitelist check ...
