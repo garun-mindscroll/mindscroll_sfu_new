@@ -48,7 +48,7 @@ class LocalStorage {
             rec_server: false, // The recording will be stored on the server rather than locally
             video_obj_fit: 2, // cover
             video_controls: 0, // off
-            theme: 0, // dark
+            theme: 1, // dark
             theme_color: '#000000', // custom theme color
             theme_custom: false, // keep custom theme
             buttons_bar: 0, // vertical

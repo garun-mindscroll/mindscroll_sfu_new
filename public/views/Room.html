@@ -63,6 +63,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/monolith.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" />
+		<link rel="stylesheet" href="../css/custom.css" />
 
         <script defer src="../js/Brand.js"></script>
 
@@ -144,9 +145,13 @@
                         class="mirror"
                         poster="../images/loader.gif"
                         style="object-fit: contain"
+						width="900"
+						height="800"
                     ></video>
                 </div>
                 <div class="initComands">
+					<img src="../images/logosmall.png">
+                    <h3 class="text-primary"> Sign in</h3>
                     <button
                         id="initVideoAudioRefreshButton"
                         class="fas fa-rotate"
@@ -168,13 +173,18 @@
                     <select id="initVideoSelect" class="form-select text-light bg-dark"></select>
                     <select id="initMicrophoneSelect" class="form-select text-light bg-dark"></select>
                     <select id="initSpeakerSelect" class="form-select text-light bg-dark"></select>
+					
+					<input type="text" id="login_user_name" name="login_user_name" class="swal2-input" placeholder="Your name" style="width:85%">
+					<label id="login_user_name_error" class="hidden">Name is required field</label>
+					<input type="text" id="user_email" name="user_email" class="swal2-input" placeholder="Your email" style="width:85%">
+					<label id="user_email_error" class="hidden">Email is required field</label>
                 </div>
             </div>
         </section>
 
         <div id="control" class="fadein">
             <button id="shareButton" class="hidden"><i class="fas fa-share-alt"></i></button>
-            <button id="hideMeButton" class="hidden"><i id="hideMeIcon" class="fas fa-user"></i></button>
+            <button id="hideMeButton" class="hidden hide"><i id="hideMeIcon" class="fas fa-user"></i></button>
             <button id="swapCameraButton" class="hidden"><i class="fas fa-camera-rotate"></i></button>
             <button id="startVideoButton" class="hidden"><i class="fas fa-video-slash"></i></button>
             <button id="stopVideoButton" class="hidden"><i class="fas fa-video"></i></button>
@@ -184,14 +194,14 @@
             <button id="stopScreenButton" class="hidden"><i class="fas fa-stop-circle"></i></button>
             <button id="startRecButton" class="hidden"><i class="fas fa-record-vinyl"></i></button>
             <button id="stopRecButton" style="color: red" class="hidden"><i class="fas fa-record-vinyl"></i></button>
-            <button id="raiseHandButton" class="hidden"><i class="fas fa-hand-paper"></i></button>
-            <button id="lowerHandButton" class="hidden"><i id="lowerHandIcon" class="fas fa-hand-paper"></i></button>
-            <button id="emojiRoomButton" class="hidden"><i class="fas fa-face-smile"></i></button>
+            <button id="raiseHandButton" class="hidden hide"><i class="fas fa-hand-paper"></i></button>
+            <button id="lowerHandButton" class="hidden hide"><i id="lowerHandIcon" class="fas fa-hand-paper"></i></button>
+            <button id="emojiRoomButton" class="hidden hide"><i class="fas fa-face-smile"></i></button>
             <button id="chatButton" class="hidden"><i class="fas fa-comments"></i></button>
-            <button id="transcriptionButton" class="hidden"><i class="fas fa-closed-captioning"></i></button>
-            <button id="whiteboardButton" class="hidden"><i class="fas fa-chalkboard-teacher"></i></button>
-            <button id="settingsButton" class="hidden"><i class="fas fa-cogs"></i></button>
-            <button id="aboutButton" class="hidden"><i class="fas fa-question"></i></button>
+            <button id="transcriptionButton" class="hidden hide"><i class="fas fa-closed-captioning"></i></button>
+            <button id="whiteboardButton" class="hidden hide"><i class="fas fa-chalkboard-teacher"></i></button>
+            <button id="settingsButton" class="hidden hide"><i class="fas fa-cogs"></i></button>
+            <button id="aboutButton" class="hidden hide"><i class="fas fa-question"></i></button>
             <!-- <button id="restartICE" class="hidden"><i class="fas fa-satellite-dish"></i></button> -->
             <button id="exitButton" class="hidden"><i class="fas fa-right-from-bracket"></i></button>
         </div>
@@ -1293,6 +1303,9 @@
                                     class="form-control" 
                                     placeholder="Enter text here..."
                                 > -->
+								 <button id="chatSendButton" class="float-right hidden">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
                             </div>
                         </div>
 
@@ -1316,9 +1329,7 @@
                             <button id="chatCleanTextButton" class="float-left mr5 hidden">
                                 <i class="fas fa-trash"></i>
                             </button>
-                            <button id="chatSendButton" class="float-right hidden">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
+                           
                         </div>
                     </div>
                 </div>

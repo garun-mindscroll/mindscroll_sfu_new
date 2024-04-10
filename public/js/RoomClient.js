@@ -231,7 +231,7 @@ class RoomClient {
         this.showChatOnMessage = true;
         this.isChatBgTransparent = false;
         this.isVideoPinned = false;
-        this.isChatPinned = false;
+        this.isChatPinned = true;
         this.isChatMaximized = false;
         this.isToggleUnreadMsg = false;
         this.isToggleRaiseHand = false;
@@ -3477,6 +3477,8 @@ class RoomClient {
     }
 
     chatUnpin() {
+	    this.chatPin();
+	    return true;
         if (!this.isVideoPinned) {
             this.videoMediaContainer.style.top = 0;
             this.videoMediaContainer.style.right = null;

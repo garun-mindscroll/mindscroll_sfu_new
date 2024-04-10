@@ -942,16 +942,16 @@ async function whoAreYou() {
         allowEscapeKey: false,
         background: swalBackground,
         title: BRAND.app.name,
-        input: 'text',
-        inputPlaceholder: 'Enter your name',
-        inputAttributes: { maxlength: 32 },
-        inputValue: default_name,
+       // input: 'text',
+       // inputPlaceholder: 'Enter your name',
+      //  inputAttributes: { maxlength: 32 },
+      //  inputValue: default_name,
         html: initUser, // Inject HTML
         confirmButtonText: `Join meeting`,
         customClass: { popup: 'init-modal-size' },
         showClass: { popup: 'animate__animated animate__fadeInDown' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' },
-        inputValidator: (name) => {
+       /* inputValidator: (name) => {
             if (!name) return 'Please enter your name';
             if (name.length > 30) return 'Name must be max 30 char';
             name = filterXSS(name);
@@ -962,7 +962,29 @@ async function whoAreYou() {
             setCookie(room_id + '_name', name, 30);
             peer_name = name;
         },
+		*/
+		preConfirm: () => {
+			var user_email = $('#user_email').val();
+			var name = $('#login_user_name').val();
+			if(name == '' || name == null) {
+			$('#login_user_name').addClass('swal2-inputerror');
+			$('#login_user_name_error').removeClass('hidden');
+			return false;
+			}else if(user_email == '' || user_email == null) {
+			$('#user_email').addClass('swal2-inputerror');
+			$('#user_email_error').removeClass('hidden');
+			return false;
+			}else {
+			if (!getCookie(room_id + '_name')) {
+			window.localStorage.peer_name = name;
+			}
+			setCookie(room_id + '_name', name, 30);
+			peer_name = name;
+			return true;
+			}
+		},
     }).then(async () => {
+		/*
         if (initStream && !joinRoomWithScreen) {
             await stopTracks(initStream);
             elemDisplay('initVideo', false);
@@ -970,7 +992,11 @@ async function whoAreYou() {
         }
         getPeerInfo();
         joinRoom(peer_name, room_id);
-    });
+		*/
+			var user_email = $('#user_email').val();
+			var login_user_name = $('#login_user_name').val();
+			await checkUserPermission(room_id,user_email,login_user_name);
+		});
 
     if (!isVideoAllowed) {
         elemDisplay('initVideo', false);
@@ -3808,17 +3834,17 @@ function setTheme() {
             selectTheme.selectedIndex = 0;
             break;
         case 'grey':
-            swalBackground = 'radial-gradient(#666, #333)';
-            document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#666, #333)');
+            swalBackground = 'radial-gradient(#fff, #fff)';
+            document.documentElement.style.setProperty('--body-bg', 'radial-gradient(#DEDEDE, #DEDEDE)');
             document.documentElement.style.setProperty('--transcription-bg', 'radial-gradient(#666, #333)');
-            document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#666, #333)');
-            document.documentElement.style.setProperty('--left-msg-bg', '#056162');
-            document.documentElement.style.setProperty('--right-msg-bg', '#252d31');
+            document.documentElement.style.setProperty('--msger-bg', 'radial-gradient(#F6F6F8, #F6F6F8)');
+            document.documentElement.style.setProperty('--left-msg-bg', '#287AB3');
+            document.documentElement.style.setProperty('--right-msg-bg', '#ECECEE');
             document.documentElement.style.setProperty('--select-bg', '#2c2c2c');
             document.documentElement.style.setProperty('--tab-btn-active', '#666');
             document.documentElement.style.setProperty('--settings-bg', 'radial-gradient(#666, #333)');
             document.documentElement.style.setProperty('--wb-bg', 'radial-gradient(#797979, #000)');
-            document.documentElement.style.setProperty('--btns-bg-color', 'rgba(0, 0, 0, 0.7)');
+            document.documentElement.style.setProperty('--btns-bg-color', '#F4F4F4');
             document.body.style.background = 'radial-gradient(#666, #333)';
             selectTheme.selectedIndex = 1;
             break;

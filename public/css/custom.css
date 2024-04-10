@@ -1,0 +1,100 @@
+
+.swal2-container, .swal2-center .swal2-backdrop-show {
+    background-color: #fff !important;
+}
+
+body{
+    background-color: #EFEFF1 !important;
+}
+
+.swal2-container #initVideoSelect{
+    display: none;
+}
+
+.swal2-container #initMicrophoneSelect{
+    display: none;
+}
+
+.swal2-container #initSpeakerSelect{
+    display: none;
+}
+.swal2-container #initVideoAudioRefreshButton{
+    display: none;
+}
+
+.swal2-container .swal2-html-container .initComands .fa-video {
+    display: none;
+}
+.swal2-container .swal2-html-container .initComands .fa-microphone {
+    display: none;
+}
+.swal2-container .swal2-html-container .initComands .fa-eye {
+    display: none;
+}
+.swal2-container .swal2-html-container .initComands .fa-desktop {
+    display: none;
+}
+.swal2-container .swal2-popup{ 
+    background-color: #EFEFF1 !important;
+}
+.swal2-container .swal2-html-container .initComands .swal2-input{
+    background:#fff !important;
+    color:#000 !important;
+    border:1px solid #DEDEDE !important;
+    border-radius: 25px !important;
+   
+}
+p, button{
+    color:#000;
+}
+.chat .chat-history .message{
+    color:#000;
+}
+textarea, input[type='text']{
+    color:#000 !important;
+}
+
+.chat .chat-history .other-message{
+    color:#fff !important;
+}
+.chat .chat-history .message-data{
+    margin-bottom: 6px;
+}
+.chat .chat-history .message {
+    padding: 5px 10px;
+} 
+.chat .chat-header .chat-about{
+    color:#000;
+}
+.all-participants-img{
+    background-color: #000;
+}
+.all-participants-img:hover{
+    background-color: #F79B30;
+}
+.chat .chat-header .status{
+    color:#F79B30;
+}
+.chat .chat-history .message-data-time{
+color:#adadc1;
+}
+.chat-message .fa-paper-plane{
+    color:#fff;
+}
+#control #hideMeButton .fa-user{
+	color:#000 !important;
+}
+.chat-message #chatSendButton{
+	background-color:#2A80BB;
+}
+.swal2-styled.swal2-confirm{
+	background-color:#2A80BB !important;
+}
+#control button{
+	border-radius:50%;
+}	
+.people-list .chat-list li .name{
+	color:#000;
+}
+.hide{
+	display:none !important;
