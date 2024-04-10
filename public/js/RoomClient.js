@@ -3477,8 +3477,10 @@ class RoomClient {
     }
 
     chatUnpin() {
-	    this.chatPin();
-	    return true;
+	    if (!this.isMobileDevice) {
+  	        this.chatPin();	    
+	        return true;
+	    }
         if (!this.isVideoPinned) {
             this.videoMediaContainer.style.top = 0;
             this.videoMediaContainer.style.right = null;

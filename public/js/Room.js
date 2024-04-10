@@ -3548,31 +3548,35 @@ function getParticipantsList(peers) {
         />
         <div class="about">
             <div class="name">Public chat</div>
-            <div class="status"> <i class="fa fa-circle online"></i> online ${participantsCount}</div>
+            <div class="status"> 
+                <i class="fa fa-circle online"></i> online ${participantsCount}
+                <button class="ml5" id="muteAllButton" onclick="rc.peerAction('me','${socket.id}','mute',true,true)">${_PEER.audioOff}</button>
+            </div>
+            
         </div>`;
 
     // ONLY PRESENTER CAN EXECUTE THIS CMD
     if (!isRulesActive || isPresenter) {
-        li += `
-        <div style="class="dropdown">
-            <button 
-                class="dropdown-toggle" 
-                type="button" 
-                id="${socket.id}-chatDropDownMenu" 
-                data-bs-toggle="dropdown" 
-                aria-expanded="false"
-                style="float: right"
-            >
-            <!-- <i class="fas fa-bars"></i> -->
-            <i class="fas fa-ellipsis-vertical"></i>
-            </button>
-            <ul class="dropdown-menu text-start" aria-labelledby="${socket.id}-chatDropDownMenu">`;
+        // li += `
+        // <div style="class="dropdown">
+        //     <button 
+        //         class="dropdown-toggle" 
+        //         type="button" 
+        //         id="${socket.id}-chatDropDownMenu" 
+        //         data-bs-toggle="dropdown" 
+        //         aria-expanded="false"
+        //         style="float: right"
+        //     >
+        //     <!-- <i class="fas fa-bars"></i> -->
+        //     <i class="fas fa-ellipsis-vertical"></i>
+        //     </button>
+        //     <ul class="dropdown-menu text-start" aria-labelledby="${socket.id}-chatDropDownMenu">`;
 
-        if (BUTTONS.participantsList.sendFileAllButton) {
-            li += `<li><button class="btn-sm ml5" id="sendAllButton" onclick="rc.selectFileToShare('${socket.id}', true)">${_PEER.sendFile} Share file to all</button></li>`;
-        }
+        // if (BUTTONS.participantsList.sendFileAllButton) {
+        //     li += `<li><button class="btn-sm ml5" id="sendAllButton" onclick="rc.selectFileToShare('${socket.id}', true)">${_PEER.sendFile} Share file to all</button></li>`;
+        // }
 
-        li += `<li><button class="btn-sm ml5" id="sendVideoToAll" onclick="rc.shareVideo('all');">${_PEER.sendVideo} Share audio/video to all</button></li>`;
+        //li += `<li><button class="btn-sm ml5" id="sendVideoToAll" onclick="rc.shareVideo('all');">${_PEER.sendVideo} Share audio/video to all</button></li>`;
 
         if (BUTTONS.participantsList.ejectAllButton) {
             li += `<li><button class="btn-sm ml5" id="ejectAllButton" onclick="rc.peerAction('me','${socket.id}','eject',true,true)">${_PEER.ejectPeer} Eject all participants</button></li>`;
@@ -3580,14 +3584,7 @@ function getParticipantsList(peers) {
 
         li += `</ul>
         </div>
-
-        <br/>
-
-        <div class="about-buttons mt5">
-            <button class="ml5" id="muteAllButton" onclick="rc.peerAction('me','${socket.id}','mute',true,true)">${_PEER.audioOff}</button>
-            <button class="ml5" id="hideAllButton" onclick="rc.peerAction('me','${socket.id}','hide',true,true)">${_PEER.videoOff}</button>
-            <button class="ml5" id="stopAllButton" onclick="rc.peerAction('me','${socket.id}','stop',true,true)">${_PEER.screenOff}</button>
-        </div>`;
+        `;
     }
 
     li += `
@@ -3629,21 +3626,15 @@ function getParticipantsList(peers) {
                     />
                     <div class="about">
                         <div class="name">${peer_name_limited}</div>
-                        <div class="status"> <i class="fa fa-circle online"></i> online <i id="${peer_id}-unread-msg" class="fas fa-comments hidden"></i> </div>
+                        <div class="status"> 
+                            <i class="fa fa-circle online"></i> online <i id="${peer_id}-unread-msg" class="fas fa-comments hidden"></i> 
+                            <button class="ml5" id='${peer_id}___pAudio' onclick="rc.peerAction('me',this.id,'mute')">${peer_audio}</button>
+                        </div>
+                        
                     </div>
 
                     <div style="class="dropdown">
-                        <button 
-                            class="dropdown-toggle" 
-                            type="button" 
-                            id="${peer_id}-chatDropDownMenu" 
-                            data-bs-toggle="dropdown" 
-                            aria-expanded="false"
-                            style="float: right"
-                        >
-                        <!-- <i class="fas fa-bars"></i> -->
-                        <i class="fas fa-ellipsis-vertical"></i>
-                        </button>
+                        
                         <ul class="dropdown-menu text-start" aria-labelledby="${peer_id}-chatDropDownMenu">`;
 
                 if (BUTTONS.participantsList.sendFileButton) {
@@ -3664,13 +3655,7 @@ function getParticipantsList(peers) {
 
                 li += `</ul>
                     </div>
-
-                    <br/>
-
-                    <div class="about-buttons mt5"> 
-                        <button class="ml5" id='${peer_id}___pAudio' onclick="rc.peerAction('me',this.id,'mute')">${peer_audio}</button>
-                        <button class="ml5" id='${peer_id}___pVideo' onclick="rc.peerAction('me',this.id,'hide')">${peer_video}</button>
-                        <button class="ml5" id='${peer_id}___pScreen' onclick="rc.peerAction('me',this.id,'stop')">${peer_screen}</button>
+                        
                 `;
 
                 // li += `
@@ -3682,7 +3667,7 @@ function getParticipantsList(peers) {
                 }
 
                 li += ` 
-                    </div>
+                    
                 </li>
                 `;
             } else {
@@ -3701,45 +3686,43 @@ function getParticipantsList(peers) {
                 />
                     <div class="about">
                         <div class="name">${peer_name_limited}</div>
-                        <div class="status"> <i class="fa fa-circle online"></i> online <i id="${peer_id}-unread-msg" class="fas fa-comments hidden"></i> </div>
+                        <div class="status"> 
+                            <i class="fa fa-circle online"></i> online <i id="${peer_id}-unread-msg" class="fas fa-comments hidden"></i> 
+                            <button class="ml5" id='${peer_id}___pAudio' onclick="rc.peerGuestNotAllowed('audio')">${peer_audio}</button>
+                        </div>
+                        
                     </div>
                 `;
 
                 // NO ROOM BROADCASTING
                 if (!isBroadcastingEnabled) {
-                    li += `
-                    <div style="class="dropdown">
-                        <button 
-                            class="dropdown-toggle" 
-                            type="button" 
-                            id="${peer_id}-chatDropDownMenu" 
-                            data-bs-toggle="dropdown" 
-                            aria-expanded="false"
-                            style="float: right"
-                        >
-                        <!-- <i class="fas fa-bars"></i> -->
-                        <i class="fas fa-ellipsis-vertical"></i>
-                        </button>
-                        <ul class="dropdown-menu text-start" aria-labelledby="${peer_id}-chatDropDownMenu">`;
+                    // li += `
+                    // <div style="class="dropdown">
+                    //     <button 
+                    //         class="dropdown-toggle" 
+                    //         type="button" 
+                    //         id="${peer_id}-chatDropDownMenu" 
+                    //         data-bs-toggle="dropdown" 
+                    //         aria-expanded="false"
+                    //         style="float: right"
+                    //     >
+                    //     <!-- <i class="fas fa-bars"></i> -->
+                    //     <i class="fas fa-ellipsis-vertical"></i>
+                    //     </button>
+                    //     <ul class="dropdown-menu text-start" aria-labelledby="${peer_id}-chatDropDownMenu">`;
 
-                    if (BUTTONS.participantsList.sendFileButton) {
-                        li += `<li><button class="btn-sm ml5" id='${peer_id}___shareFile' onclick="rc.selectFileToShare('${peer_id}', false)">${peer_sendFile} Share file</button></li>`;
-                    }
+                    // if (BUTTONS.participantsList.sendFileButton) {
+                    //     li += `<li><button class="btn-sm ml5" id='${peer_id}___shareFile' onclick="rc.selectFileToShare('${peer_id}', false)">${peer_sendFile} Share file</button></li>`;
+                    // }
 
-                    li += `<li><button class="btn-sm ml5" id="${peer_id}___sendVideoTo" onclick="rc.shareVideo('${peer_id}');">${_PEER.sendVideo} Share Audio/Video</button></li>
-                        </ul>
-                    </div>
-                    `;
+                    // li += `<li><button class="btn-sm ml5" id="${peer_id}___sendVideoTo" onclick="rc.shareVideo('${peer_id}');">${_PEER.sendVideo} Share Audio/Video</button></li>
+                    //     </ul>
+                    // </div>
+                    // `;
                 }
 
                 li += `
-                    <br/>
-
-                    <div class="about-buttons mt5"> 
-                        <button class="ml5" id='${peer_id}___pAudio' onclick="rc.peerGuestNotAllowed('audio')">${peer_audio}</button>
-                        <button class="ml5" id='${peer_id}___pVideo' onclick="rc.peerGuestNotAllowed('video')">${peer_video}</button>
-                        <button class="ml5" id='${peer_id}___pScreen' onclick="rc.peerGuestNotAllowed('screen')">${peer_screen}</button>
-                        `;
+                    `;
 
                 // li += `
                 //         <button class="ml5" >${peer_presenter}</button>`;
@@ -3750,7 +3733,7 @@ function getParticipantsList(peers) {
                 }
 
                 li += ` 
-                    </div>
+                    
                 </li>
                 `;
             }

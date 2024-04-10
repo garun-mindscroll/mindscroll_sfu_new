@@ -98,3 +98,7 @@ color:#adadc1;
 }
 .hide{
 	display:none !important;
+}
+.swal2-container .swal2-title{
+	display:none !important;
+}
