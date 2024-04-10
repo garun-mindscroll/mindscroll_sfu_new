@@ -3796,23 +3796,7 @@ class RoomClient {
                     ${positionFirst}
                 </div>
                 <div class="message ${messageClass}">
-                    <span class="text-start " id="${chatMessagesId}">${message}</span>
-                    <hr/>
-                    <div class="about-buttons mt5">
-                        <button 
-                            id="msg-copy-${chatMessagesId}" 
-                            class="mr5" 
-                            onclick="rc.copyToClipboard('${chatMessagesId}')">
-                            <i class="fas fa-paste"></i>
-                        </button>
-                        ${speechButton}
-                        <button 
-                            id="msg-delete-${chatMessagesId}"   
-                            class="mr5" 
-                            onclick="rc.deleteMessage('msg-${chatMessagesId}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+                    <span class="text-start " id="${chatMessagesId}">${message}</span>                    
                 </div>
             </li>
         `;
