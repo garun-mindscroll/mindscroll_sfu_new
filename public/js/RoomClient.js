@@ -3404,6 +3404,14 @@ class RoomClient {
         }
         isParticipantsListOpen = !isParticipantsListOpen;
         this.isChatOpen = !this.isChatOpen;
+        // Garun Mishra Start //
+        if(!this.isChatOpen) {
+            setTimeout(()=>{
+                $('#videoMediaContainer').css('width','100%');
+                $('#videoMediaContainer').css('height','100%');
+            },10)            
+        }
+        // Garun Mishra END//
         if (this.isChatPinned) this.chatUnpin();
         resizeChatRoom();
     }
@@ -3477,15 +3485,16 @@ class RoomClient {
     }
 
     chatUnpin() {
-	    if (!this.isMobileDevice) {
-  	        this.chatPin();	    
-	        return true;
-	    }
+	    
         if (!this.isVideoPinned) {
             this.videoMediaContainer.style.top = 0;
             this.videoMediaContainer.style.right = null;
             this.videoMediaContainer.style.width = '100%';
             this.videoMediaContainer.style.height = '100%';
+        }
+        if (!this.isMobileDevice) {
+            this.chatPin();	    
+          return true;
         }
         document.documentElement.style.setProperty('--msger-width', '800px');
         document.documentElement.style.setProperty('--msger-height', '700px');
