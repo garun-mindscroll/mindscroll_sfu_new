@@ -1,15 +1,7 @@
 'use strict';
 
 /**
- * MiroTalk SFU - Client component
- *
- * @link    GitHub: https://github.com/miroslavpejic85/mirotalksfu
- * @link    Official Live demo: https://sfu.mirotalk.com
- * @license For open source use: AGPLv3
- * @license For commercial or closed source, contact us at license.mirotalk@gmail.com or purchase directly via CodeCanyon
- * @license CodeCanyon: https://codecanyon.net/item/mirotalk-sfu-webrtc-realtime-video-conferences/40769970
- * @author  Miroslav Pejic - miroslav.pejic.85@gmail.com
- * @version 1.4.13
+ * Mindscroll SFU - Client component
  *
  */
 
@@ -2303,7 +2295,7 @@ class RoomClient {
         d.id = peer_id + '__videoOff';
         vb = document.createElement('div');
         vb.setAttribute('id', peer_id + 'vb');
-        vb.className = 'videoMenuBar fadein';
+        vb.className = 'videoMenuBar fadein hide';
         au = document.createElement('button');
         au.id = peer_id + '__audio';
         au.className = peer_audio ? html.audioOn : html.audioOff;
@@ -4979,7 +4971,7 @@ class RoomClient {
         d.id = '__shareVideo';
         vb = document.createElement('div');
         vb.setAttribute('id', '__videoBar');
-        vb.className = 'videoMenuBar fadein';
+        vb.className = 'videoMenuBar fadein hide';
         e = document.createElement('button');
         e.className = 'fas fa-times';
         e.id = '__videoExit';
