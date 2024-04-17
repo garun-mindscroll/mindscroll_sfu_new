@@ -1701,7 +1701,7 @@ class RoomClient {
                 elem.className = this.isMobileDevice || isScreen ? '' : 'mirror';
                 vb = document.createElement('div');
                 vb.setAttribute('id', this.peer_id + '__vb');
-                vb.className = 'videoMenuBar fadein';
+                vb.className = 'videoMenuBar fadein hide';
                 pip = document.createElement('button');
                 pip.id = id + '__pictureInPicture';
                 pip.className = html.pip;
@@ -2074,7 +2074,7 @@ class RoomClient {
                 elem.style.objectFit = remoteIsScreen || isBroadcastingEnabled ? 'contain' : 'var(--videoObjFit)';
                 vb = document.createElement('div');
                 vb.setAttribute('id', remotePeerId + '__vb');
-                vb.className = 'videoMenuBar fadein';
+                vb.className = 'videoMenuBar fadein hide';
 
                 eDiv = document.createElement('div');
                 eDiv.className = 'expand-video';
