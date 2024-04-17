@@ -32,7 +32,7 @@ let redirect = {
     enabled: true,
     url: '/newroom',
 };
-
+const domain_name = 'mindscroll.org';
 let recCodecs = null;
 let recPrioritizeH264 = false;
 
@@ -2797,7 +2797,10 @@ function leaveFeedback() {
 }
 
 function redirectOnLeave() {
-    redirect && redirect.enabled ? openURL(redirect.url) : openURL('/newroom');
+    // redirect && redirect.enabled ? openURL(redirect.url) : openURL('/newroom');
+    deleteCookie('is_admin_auto_login_enabled', `.${domain_name}`);
+    deleteCookie('admin_user_name', `.${domain_name}`);
+    redirect && redirect.enabled ? openURL(redirect.url) : openURL('https://betaconnect.mindscroll.org');
 }
 
 function userLog(icon, message, position, timer = 3000) {
