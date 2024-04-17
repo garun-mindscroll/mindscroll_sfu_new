@@ -270,7 +270,7 @@ class RoomClient {
         this.mediaRecorder = null;
         this.audioRecorder = null;
         this.recScreenStream = null;
-        this.recSyncServerRecording = false;
+        this.recSyncServerRecording = true;
         this.recSyncTime = 4000; // 4 sec
         this.recSyncChunkSize = 1000000; // 1MB
 
@@ -946,7 +946,7 @@ class RoomClient {
             allowEscapeKey: false,
             showDenyButton: true,
             showConfirmButton: false,
-            background: swalBackground,
+            background: swalBackground2,
             imageUrl: image.poster,
             title: 'Server away',
             text: 'The server seems away or in maintenance, please wait until it come back up.',
@@ -992,7 +992,7 @@ class RoomClient {
         Swal.fire({
             allowOutsideClick: false,
             allowEscapeKey: false,
-            background: swalBackground,
+            background: swalBackground2,
             imageUrl: image.user,
             position: 'center',
             title: 'Username',
@@ -1039,7 +1039,7 @@ class RoomClient {
 
     toggleRoomBroadcasting() {
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             imageUrl: image.broadcasting,
             title: 'Room broadcasting Enabled',
@@ -2153,7 +2153,9 @@ class RoomClient {
 
                 vb.appendChild(eDiv);
                 BUTTONS.consumerVideo.audioVolumeInput && !this.isMobileDevice && vb.appendChild(pv);
-                vb.appendChild(au);
+                // vb.appendChild(au);
+                p.append(au);
+
                 vb.appendChild(cm);
                 BUTTONS.consumerVideo.snapShotButton && vb.appendChild(ts);
                 BUTTONS.consumerVideo.videoPictureInPicture &&
@@ -2420,7 +2422,7 @@ class RoomClient {
             // startScreenButton.click(); // Chrome - Opera - Edge - Brave
             // handle error: getDisplayMedia requires transient activation from a user gesture on Safari - FireFox
             Swal.fire({
-                background: swalBackground,
+                background: swalBackground2,
                 position: 'center',
                 icon: 'question',
                 text: 'Do you want to share your screen?',
@@ -2775,7 +2777,7 @@ class RoomClient {
 
     userLog(icon, message, position, timer = 5000) {
         const Toast = Swal.mixin({
-            background: swalBackground,
+            background: swalBackground2,
             toast: true,
             position: position,
             showConfirmButton: false,
@@ -2806,7 +2808,7 @@ class RoomClient {
             case 'warning':
             case 'error':
                 Swal.fire({
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'center',
                     icon: type,
                     title: type,
@@ -2819,7 +2821,7 @@ class RoomClient {
             case 'info':
             case 'success':
                 Swal.fire({
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'center',
                     icon: type,
                     title: type,
@@ -2830,7 +2832,7 @@ class RoomClient {
                 break;
             case 'html':
                 Swal.fire({
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'center',
                     icon: type,
                     html: message,
@@ -2840,7 +2842,7 @@ class RoomClient {
                 break;
             case 'toast':
                 const Toast = Swal.mixin({
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'top-end',
                     icon: 'info',
                     showConfirmButton: false,
@@ -2888,7 +2890,7 @@ class RoomClient {
             Swal.fire({
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-                background: swalBackground,
+                background: swalBackground2,
                 position: position,
                 icon: icon,
                 imageUrl: imageUrl,
@@ -2910,7 +2912,7 @@ class RoomClient {
             Swal.fire({
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-                background: swalBackground,
+                background: swalBackground2,
                 position: position,
                 icon: icon,
                 imageUrl: imageUrl,
@@ -3682,7 +3684,7 @@ class RoomClient {
             return this.userLog('info', 'No participants in the room except you', 'top-end');
         }
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             imageUrl: image.message,
             input: 'text',
@@ -3839,7 +3841,7 @@ class RoomClient {
 
     deleteMessage(id) {
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             title: 'Delete this Message?',
             imageUrl: image.delete,
@@ -4025,7 +4027,7 @@ class RoomClient {
             return userLog('info', 'No chat messages to clean', 'top-end');
         }
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             title: 'Clean up all chat Messages?',
             imageUrl: image.delete,
@@ -4112,7 +4114,7 @@ class RoomClient {
 
     recordingOptions(options, audioMixerTracks) {
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'top',
             imageUrl: image.recording,
             title: 'Recording options',
@@ -4331,7 +4333,7 @@ class RoomClient {
 
         this.saveLastRecordingInfo(recordingInfo);
         this.showRecordingInfo(recType, recordingInfo, recordingMsg);
-        this.saveRecordingInLocalDevice(blob, recFileName, recTime);
+        //this.saveRecordingInLocalDevice(blob, recFileName, recTime);
     }
 
     handleServerRecordingStop() {
@@ -4368,7 +4370,7 @@ class RoomClient {
     showRecordingInfo(recType, recordingInfo, recordingMsg = '') {
         if (window.localStorage.isReconnected === 'false') {
             Swal.fire({
-                background: swalBackground,
+                background: swalBackground2,
                 position: 'center',
                 icon: 'success',
                 title: 'Recording',
@@ -4436,6 +4438,7 @@ class RoomClient {
             this.audioRecorder.stopMixedAudioStream();
             this.recordingAction(enums.recording.stop);
             this.sound('recStop');
+            this.saveRecordingToS3();
         }
     }
 
@@ -4447,6 +4450,40 @@ class RoomClient {
             action: action,
         });
     }
+
+    // Garun Mishra Start //
+    saveRecordingToS3() {
+        setTimeout(() => {            
+            const type = recordedBlobs[0].type.includes('mp4') ? 'mp4' : 'webm';
+            const blob = new Blob(recordedBlobs, { type: 'video/' + type });
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': blob.type, // Correct Content-Type header
+                },
+                body: blob,
+            };
+            let postUrl = 'https://sfu.mindscroll.org/save-recording/'+this.room_id;
+            fetch(postUrl, options)
+                .then(response => {
+                    // Handle response
+                    if (response.ok) {
+                        // Request successful
+                        return response.json(); // or response.text() or response.blob() based on the expected response type
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    // Handle data returned by the server
+                    console.log(data);
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('There was a problem with your fetch operation:', error);
+                });            
+        },500);
+    }
+    // Garun Mishra END //
 
     handleRecordingAction(data) {
         console.log('Handle recording action', data);
@@ -4534,7 +4571,7 @@ class RoomClient {
 
         Swal.fire({
             allowOutsideClick: false,
-            background: swalBackground,
+            background: swalBackground2,
             imageAlt: 'mirotalksfu-file-sharing',
             imageUrl: image.share,
             position: 'center',
@@ -4757,7 +4794,7 @@ class RoomClient {
             reader.onload = (e) => {
                 Swal.fire({
                     allowOutsideClick: false,
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'center',
                     title: 'Received file',
                     text: this.incomingFileInfo.fileName + ' size ' + this.bytesToSize(this.incomingFileInfo.fileSize),
@@ -4778,7 +4815,7 @@ class RoomClient {
             // not img file
             Swal.fire({
                 allowOutsideClick: false,
-                background: swalBackground,
+                background: swalBackground2,
                 position: 'center',
                 title: 'Received file',
                 text: this.incomingFileInfo.fileName + ' size ' + this.bytesToSize(this.incomingFileInfo.fileSize),
@@ -4842,7 +4879,7 @@ class RoomClient {
         this.sound('open');
 
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             imageUrl: image.videoShare,
             title: 'Share a Video or Audio',
@@ -5058,7 +5095,7 @@ class RoomClient {
                             allowOutsideClick: false,
                             allowEscapeKey: false,
                             showDenyButton: true,
-                            background: swalBackground,
+                            background: swalBackground2,
                             imageUrl: image.locked,
                             input: 'text',
                             inputPlaceholder: 'Set Room password',
@@ -5314,7 +5351,7 @@ class RoomClient {
                     allowEscapeKey: true,
                     showDenyButton: false,
                     showConfirmButton: true,
-                    background: swalBackground,
+                    background: swalBackground2,
                     title: 'Rejected',
                     text: 'Your join meeting was be rejected by moderator',
                     confirmButtonText: `Ok`,
@@ -5448,7 +5485,7 @@ class RoomClient {
         Swal.fire({
             allowOutsideClick: false,
             allowEscapeKey: false,
-            background: swalBackground,
+            background: swalBackground2,
             imageUrl: image.forbidden,
             title: 'Oops, Unauthorized',
             text: 'The host has user authentication enabled',
@@ -5473,7 +5510,7 @@ class RoomClient {
             Swal.fire({
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-                background: swalBackground,
+                background: swalBackground2,
                 imageUrl: image.locked,
                 title: 'Oops, Room is Locked',
                 input: 'text',
@@ -5501,7 +5538,7 @@ class RoomClient {
         console.log('Room is Locked, try with another one');
         Swal.fire({
             allowOutsideClick: false,
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             imageUrl: image.locked,
             title: 'Oops, Wrong Room Password',
@@ -5522,7 +5559,7 @@ class RoomClient {
             allowEscapeKey: false,
             showDenyButton: true,
             showConfirmButton: false,
-            background: swalBackground,
+            background: swalBackground2,
             imageUrl: image.poster,
             title: 'Room has lobby enabled',
             text: 'Asking to join meeting...',
@@ -5546,7 +5583,7 @@ class RoomClient {
             allowEscapeKey: false,
             showDenyButton: false,
             showConfirmButton: true,
-            background: swalBackground,
+            background: swalBackground2,
             imageUrl: image.forbidden,
             title: 'Banned',
             text: 'You are banned from this room!',
@@ -5971,7 +6008,7 @@ class RoomClient {
     peerMediaStartConfirm(type, imageUrl, title, text) {
         sound('notify');
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             imageUrl: imageUrl,
             title: title,
@@ -6034,7 +6071,7 @@ class RoomClient {
             case 'ban':
                 let banConfirmed = false;
                 Swal.fire({
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'center',
                     imageUrl: image.forbidden,
                     title: 'Ban current participant',
@@ -6068,7 +6105,7 @@ class RoomClient {
                 let ejectConfirmed = false;
                 let whoEject = data.broadcast ? 'All participants except yourself?' : 'current participant?';
                 Swal.fire({
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'center',
                     imageUrl: data.broadcast ? image.users : image.user,
                     title: 'Eject ' + whoEject,
@@ -6153,7 +6190,7 @@ class RoomClient {
                         break;
                 }
                 Swal.fire({
-                    background: swalBackground,
+                    background: swalBackground2,
                     position: 'center',
                     imageUrl: imageUrl,
                     title: title,
@@ -6590,7 +6627,7 @@ class RoomClient {
         Swal.fire({
             allowOutsideClick: false,
             allowEscapeKey: false,
-            background: swalBackground,
+            background: swalBackground2,
             imageUrl: image.geolocation,
             position: 'center',
             title: 'Geo Location',
@@ -6660,7 +6697,7 @@ class RoomClient {
         Swal.fire({
             allowOutsideClick: false,
             allowEscapeKey: false,
-            background: swalBackground,
+            background: swalBackground2,
             imageUrl: image.geolocation,
             position: 'center',
             title: 'Geo Location',

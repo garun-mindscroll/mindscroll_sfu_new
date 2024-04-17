@@ -32,7 +32,7 @@
 }
 
 :root {
-    --body-bg: radial-gradient(#393939, #000000);
+    --body-bg: radial-gradient(#DEDEDE, #DEDEDE);
     --border: 1px solid rgb(255 255 255 / 32%);
     --border-radius: 1rem;
     --msger-width: 800px;
@@ -46,7 +46,7 @@
     --left-msg-bg: #252d31;
     --right-msg-bg: #056162;
     --private-msg-bg: #6b1226;
-    --box-shadow: 0px 8px 16px 0px rgb(0 0 0);
+    --box-shadow: 0px 4px 8px 0px #6c6b6b;
     --btns-hover-scale: scale(1.1);
     --settings-bg: radial-gradient(#393939, #000000);
     --tab-btn-active: rgb(42 42 42 / 70%);

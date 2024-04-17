@@ -100,5 +100,35 @@ color:#adadc1;
 	display:none !important;
 }
 .swal2-container .swal2-title{
-	display:none !important;
+	//display:none !important;
 }
+.swal2-html-container{
+	color:#000 !important;
+}
+.swal2-container .swal2-image{
+	//background-color:#ECECED !important;
+}
+.swal2-container .swal2-modal{
+	//background-color: #ECECED !important;
+}
+.swal2-container.swal2-top>.swal2-popup{
+	border-radius:25px;
+}
+.swal2-container .swal2-popup{
+	border-radius:25px;
+}
+.swal2-container .swal2-icon-warning .swal2-title{
+	color:#000 !important;
+}
+.swal2-top-end{
+	//background-color:transparent !important;
+}
+.swal2-backdrop-show{
+	background-color:transparent !important;
+}
+.chat-container .chat-app .chat .chat-message .fa-smile {
+    display: none;
+}
+.swal2-container .swal2-popup .swal2-title {
+	color:#000!important;
+}	

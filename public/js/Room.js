@@ -175,6 +175,7 @@ const initSpeakerSelect = getId('initSpeakerSelect');
 // ####################################################
 
 let swalBackground = 'radial-gradient(#393939, #000000)'; //'rgba(0, 0, 0, 0.7)';
+let swalBackground2 = 'radial-gradient(#ECECED, #ECECED)'; //'rgba(0, 0, 0, 0.7)';
 
 let rc = null;
 let producer = null;
@@ -941,7 +942,8 @@ async function whoAreYou() {
         allowOutsideClick: false,
         allowEscapeKey: false,
         background: swalBackground,
-        title: BRAND.app.name,
+        title: '',
+        //title: BRAND.app.name,
        // input: 'text',
        // inputPlaceholder: 'Enter your name',
       //  inputAttributes: { maxlength: 32 },
@@ -1122,7 +1124,7 @@ async function shareRoom(useNavigator = false) {
         sound('open');
 
         Swal.fire({
-            background: swalBackground,
+            background: swalBackground2,
             position: 'center',
             title: 'Share the room',
             html: `
@@ -1131,7 +1133,7 @@ async function shareRoom(useNavigator = false) {
             </div>
             <br/>
             <p style="background:transparent; color:rgb(8, 189, 89);">Join from your mobile device</p>
-            <p style="background:transparent; color:white; font-family: Arial, Helvetica, sans-serif;">No need for apps, simply capture the QR code with your mobile camera Or Invite someone else to join by sending them the following URL</p>
+            <p style="background:transparent; color:black; font-family: Arial, Helvetica, sans-serif;">No need for apps, simply capture the QR code with your mobile camera Or Invite someone else to join by sending them the following URL</p>
             <p style="background:transparent; color:rgb(8, 189, 89);">${RoomURL}</p>`,
             showDenyButton: true,
             showCancelButton: true,
@@ -1186,7 +1188,7 @@ function shareRoomByEmail() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swalBackground,
+        background: swalBackground2,
         imageUrl: image.email,
         position: 'center',
         title: 'Enter the Email',
@@ -1631,7 +1633,16 @@ function handleButtons() {
         if (participantsCount == 1 && !rc.peer_info.peer_audio) {
             return userLog('warning', '🔴 Recording requires your audio to be enabled', 'top-end', 6000);
         }
-        rc.startRecording();
+
+        // Garun mishra start//
+        var is_organizer = getCookie('is_organizer') != null  ?  getCookie('is_organizer') : '';
+        if(is_organizer == 'true') {
+            rc.startRecording();
+        } else {
+            return userLog('warning', 'Only host can start the recording.', 'top-end', 600000);
+        }
+        // Garun Mishra END//
+        
     };
     stopRecButton.onclick = () => {
         rc.stopRecording();
@@ -1995,7 +2006,7 @@ function popupHtmlMessage(icon, imageUrl, title, html, position, redirectURL = f
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swalBackground,
+        background: swalBackground2,
         position: position,
         icon: icon,
         imageUrl: imageUrl,
@@ -2768,7 +2779,7 @@ function leaveFeedback() {
         allowOutsideClick: false,
         allowEscapeKey: false,
         showDenyButton: true,
-        background: swalBackground,
+        background: swalBackground2,
         imageUrl: image.feedback,
         title: 'Leave a feedback',
         text: 'Do you want to rate your MiroTalk experience?',
@@ -2791,7 +2802,7 @@ function redirectOnLeave() {
 
 function userLog(icon, message, position, timer = 3000) {
     const Toast = Swal.mixin({
-        background: swalBackground,
+        background: swalBackground2,
         toast: true,
         position: position,
         showConfirmButton: false,
@@ -3062,7 +3073,7 @@ function whiteboardAddObj(type) {
     switch (type) {
         case 'imgUrl':
             Swal.fire({
-                background: swalBackground,
+                background: swalBackground2,
                 title: 'Image URL',
                 input: 'text',
                 showCancelButton: true,
@@ -3085,7 +3096,7 @@ function whiteboardAddObj(type) {
         case 'imgFile':
             Swal.fire({
                 allowOutsideClick: false,
-                background: swalBackground,
+                background: swalBackground2,
                 position: 'center',
                 title: 'Select the image',
                 input: 'file',
@@ -3122,7 +3133,7 @@ function whiteboardAddObj(type) {
         case 'pdfFile':
             Swal.fire({
                 allowOutsideClick: false,
-                background: swalBackground,
+                background: swalBackground2,
                 position: 'center',
                 title: 'Select the PDF',
                 input: 'file',
@@ -3393,7 +3404,7 @@ function getWhiteboardAction(action) {
 
 function confirmClearBoard() {
     Swal.fire({
-        background: swalBackground,
+        background: swalBackground2,
         imageUrl: image.delete,
         position: 'center',
         title: 'Clean the board',
@@ -3962,7 +3973,7 @@ function showAbout() {
     sound('open');
 
     Swal.fire({
-        background: swalBackground,
+        background: swalBackground2,
         imageUrl: image.about,
         customClass: { image: 'img-about' },
         position: 'center',

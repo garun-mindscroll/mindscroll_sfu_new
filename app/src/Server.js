@@ -73,9 +73,17 @@ const { CaptureConsole } = require('@sentry/integrations');
 const restrictAccessByIP = require('./middleware/IpWhitelist.js');
 const packageJson = require('../../package.json');
 const dotenv = require('dotenv').config();
+const AWS = require('aws-sdk');
 const db = require("./models/index");
 // Database synchorization with different Modals
 db.sequelize.sync();
+
+AWS.config.update({
+    accessKeyId: 'AKIA4MTWH2RASGOM562U',
+    secretAccessKey: '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',
+    region: 'ap-south-1'
+  });
+
 const roomController = require('./controller/room.controller');
 // Slack API
 const CryptoJS = require('crypto-js');
@@ -463,6 +471,73 @@ function startServer() {
             res.sendFile(views.login);
         }
     });
+
+    // Garun Mishra Start //
+    app.post(['/save-recording/:room_id'], (req, res) => {
+        const chunks = [];
+        // var room_id = room_id;
+        var currentRoomKey = req.params.room_id;
+        req.on('data', chunk => {
+            chunks.push(chunk);
+        });
+        req.on('end', () => {
+            const data = Buffer.concat(chunks);
+            var recordingFileName = '';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const charactersLength = characters.length;
+            for (let i = 0; i < 10; i++) {
+                recordingFileName += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            // var recordingFileName = generateRandomString(16);            
+            var outputFilename = recordingFileName+'.mp4';
+            // fs.writeFileSync(outputFilename, Buffer.from(data.blob));
+            fs.writeFile(outputFilename, data, err => {
+                if (err) {
+                    console.error('Error writing file:', err);
+                    return res.status(500).json({ error: 'Internal Server Error' });
+                }
+                const s3 = new AWS.S3();
+                // Specify the bucket name and the file you want to upload
+                const bucketName = 'testsfu';
+                const fileName = outputFilename;
+                // Read the file
+                fs.readFile(fileName, (err, data) => {
+                    if (err) {
+                        console.error('Error reading file:', err);
+                        return;
+                    }
+                    // Upload parameters
+                    const params = {
+                        Bucket: bucketName,
+                        Key: outputFilename, // Change the key as per your requirement
+                        Body: data
+                    };
+                    // Upload the file to the S3 bucket
+                    s3.upload(params, (err, data) => {
+                        if (err) {
+                        console.error('Error uploading file:', err);
+                        return;
+                        }
+                        roomController.saveRecardingPath({
+                            recording_path:data.Location,
+                            room_key: currentRoomKey
+                        }).then(()=>{
+                            fs.unlink(outputFilename, (err) => {
+                                if (err) {
+                                console.error('Error removing file:', err);
+                                return;
+                                }
+                                console.log('File removed successfully');
+                            });
+                        })
+                        console.log('File uploaded successfully. Location:', data.Location);
+                    });
+                    return res.status(200).json({ success: true });
+                });
+            });
+        });
+    });
+    // Garun Mishra END //
 
     // ####################################################
     // AXIOS
