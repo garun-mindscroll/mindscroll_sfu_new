@@ -2796,6 +2796,10 @@ function leaveFeedback() {
     });
 }
 
+function deleteCookie(name, domain) {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=' + domain + '; path=/;';
+  }
+
 function redirectOnLeave() {
     // redirect && redirect.enabled ? openURL(redirect.url) : openURL('/newroom');
     deleteCookie('is_admin_auto_login_enabled', `.${domain_name}`);
