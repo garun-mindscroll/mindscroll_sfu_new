@@ -1639,7 +1639,7 @@ function handleButtons() {
         if(is_organizer == 'true') {
             rc.startRecording();
         } else {
-            return userLog('warning', 'Only host can start the recording.', 'top-end', 600000);
+            return userLog('warning', 'Only host can start the recording.', 'top-end', 6000);
         }
         // Garun Mishra END//
         
