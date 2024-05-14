@@ -52,7 +52,7 @@ let BRAND = {
         siteName: 'Mindscroll SFU',
         title: 'Click the link to make a call.',
         description: 'Mindscroll SFU calling provides real-time video calls, messaging and screen sharing.',
-        image: 'https://sfu.mindscroll.org/images/mirotalksfu.png',
+        image: 'https://conference.mindscrollconnect.com/images/mirotalksfu.png',
     },
     html: {
         features: true,

@@ -2352,7 +2352,8 @@ class RoomClient {
             BUTTONS.videoOff.sendMessageButton && vb.appendChild(sm);
             BUTTONS.videoOff.audioVolumeInput && !this.isMobileDevice && vb.appendChild(pv);
         }
-        vb.appendChild(au);
+        // vb.appendChild(au);
+        p.appendChild(au);
         d.appendChild(i);
         d.appendChild(p);
         d.appendChild(h);
@@ -4455,7 +4456,7 @@ class RoomClient {
                 },
                 body: blob,
             };
-            let postUrl = 'https://sfu.mindscroll.org/save-recording/'+this.room_id;
+            let postUrl = 'https://conference.mindscrollconnect.com/save-recording/'+this.room_id;
             fetch(postUrl, options)
                 .then(response => {
                     // Handle response
