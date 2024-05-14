@@ -2256,6 +2256,14 @@ class RoomClient {
                 '[removeConsumer - ' + consumer_kind + '] Video-element-count',
                 this.videoMediaContainer.childElementCount,
             );
+
+	    // Garun Mishra	
+	    setTimeout(()=>{
+                $('#videoMediaContainer').css('width','100%');
+                $('#videoPinMediaContainer').css('width','100%');
+            },100)
+
+	    // END	
         }
 
         if (consumer_kind === 'audio') {

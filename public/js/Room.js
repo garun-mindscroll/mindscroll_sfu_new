@@ -2696,6 +2696,14 @@ function handleRoomClientEvents() {
         console.log('Room event: Client stop screen');
         hide(stopScreenButton);
         show(startScreenButton);
+
+	// Garun Mishra    
+	setTimeout(()=>{
+                $('#videoMediaContainer').css('width','100%');
+		$('#videoPinMediaContainer').css('width','100%');
+            },100);
+	// END    
+
         // if (isParticipantsListOpen) getRoomParticipants();
     });
     rc.on(RoomClient.EVENTS.roomLock, () => {
