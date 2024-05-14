@@ -3565,6 +3565,8 @@ function getParticipantsList(peers) {
             
         </div>`;
 
+	$('#total_participant_cnt').html(`${participantsCount}`);
+
     // ONLY PRESENTER CAN EXECUTE THIS CMD
     if (!isRulesActive || isPresenter) {
         // li += `

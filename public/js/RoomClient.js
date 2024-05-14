@@ -6334,7 +6334,7 @@ class RoomClient {
                 <div class="chat-about">
                     <h6 class="mb-0">${truncatedTitle}</h6>
                     <span class="status">
-                        <i class="fa fa-circle ${status}"></i> ${status} ${participants}
+                        <i class="fa fa-circle ${status}"></i> ${status} <span id="total_participant_cnt">${participants}</span>
                     </span>
                 </div>
             `;
