@@ -1383,8 +1383,10 @@ class RoomClient {
                 videoConstraints = {
                     audio: false,
                     video: {
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 },
+                        //width: { ideal: 1280 },
+                        //height: { ideal: 720 },
+			width: { ideal: 640 },
+                        height: { ideal: 480 },
                         deviceId: deviceId,
                         aspectRatio: 1.777,
                     },
@@ -4258,7 +4260,7 @@ class RoomClient {
     getServerRecFileName() {
         const dateTime = getDataTimeStringFormat();
         const roomName = this.room_id.trim();
-        return `Rec_${roomName}_${dateTime}.webm`;
+        return `Rec-${roomName}-${dateTime}.webm`;
     }
 
     handleMediaRecorderStart(evt) {
@@ -4439,7 +4441,7 @@ class RoomClient {
             this.audioRecorder.stopMixedAudioStream();
             this.recordingAction(enums.recording.stop);
             this.sound('recStop');
-            this.saveRecordingToS3();
+           // this.saveRecordingToS3();
         }
     }
 

@@ -2391,6 +2391,12 @@ function handleSelects() {
 // ####################################################
 // HTML INPUTS
 // ####################################################
+$(document).ready(function(){
+$('#chatMessage').on('onkeyup',function(){
+console.log('GKMMMMMMMMMMM');
+});
+
+});
 
 function handleInputs() {
     chatMessage.onkeyup = (e) => {
